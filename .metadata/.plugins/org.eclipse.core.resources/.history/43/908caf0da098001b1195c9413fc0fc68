@@ -1,0 +1,17 @@
+
+public class Tester {
+
+	public static void main(String[] args) {
+        Human h1 = new Human();
+        Human h2 = new Human();
+
+        Samurai s = new Samurai();
+        Wizard z = new Wizard();
+        Ninja n = new Ninja();
+        
+        n.attack(s);
+        s.attack(h2);
+
+	}
+
+}

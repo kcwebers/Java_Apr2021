@@ -1,0 +1,24 @@
+
+public class Tester {
+
+	public static void main(String[] args) {
+        Human h1 = new Human();
+        Human h2 = new Human();
+
+        Samurai s = new Samurai();
+        Wizard w = new Wizard();
+        Ninja n = new Ninja();
+        
+        n.attack(s);
+        s.deathBlow(n);
+        
+        n.displayHealth();
+        s.displayHealth();
+        
+        System.out.println(w.intelligence);
+        w.stripWizardOfIntelli();
+        System.out.println("=====================");
+     
+	}
+
+}

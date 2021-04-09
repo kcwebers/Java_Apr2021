@@ -1,0 +1,21 @@
+import com.kw.coffeeoop.abstracts.Coffee;
+import com.kw.coffeeoop.classes.Americano;
+import com.kw.coffeeoop.classes.IcedLatte;
+
+public class CoffeeTester {
+
+	public static void main(String[] args) {
+		Americano order1 = new Americano("Light");
+		Americano order2 = new Americano("Light");
+		
+		IcedLatte order4 = new IcedLatte("Medium");
+		IcedLatte order5 = new IcedLatte("Dark");
+		IcedLatte order6 = new IcedLatte("Medium-Light");
+		
+		System.out.println(order4.getCost());
+		
+		
+		System.out.println(Coffee.getNumberOfCoffees());
+		
+	}
+}

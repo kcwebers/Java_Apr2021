@@ -1,0 +1,28 @@
+
+public class Wizard extends Human {
+    public Wizard() {
+        this.health = 50;
+        this.intelligence = 8;
+    }
+
+    public void heal(Human target) {
+        target.health += this.intelligence;
+    }
+
+    public void fireball(Human target) {
+        target.health -= (this.intelligence * 3);
+    }
+    
+    public void stripWizardOfIntelli() {
+    	this.setIntelli(super.intelligence);
+    }
+
+    public int getIntelli() {
+    	return this.intelligence;
+    }
+    
+    public void setIntelli(int intelligence) {
+    	this.intelligence = intelligence;
+    }
+    
+}

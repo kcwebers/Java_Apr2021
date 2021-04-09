@@ -1,0 +1,6 @@
+INDEX VERSION 1.131+C:\Users\Kaysee\Documents\code\Java.11.STS\.metadata\.plugins\org.eclipse.jdt.core
+2732269874.index
+335156332.index
+3965383171.index
+3676228353.index
+3294775327.index

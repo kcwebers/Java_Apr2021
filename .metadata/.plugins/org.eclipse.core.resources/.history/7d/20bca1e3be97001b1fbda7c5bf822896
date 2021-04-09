@@ -1,0 +1,20 @@
+
+public class CoffeeTester {
+
+	public static void main(String[] args) {
+		Americano order1 = new Americano("Light");
+		Americano order2 = new Americano("Dark");
+		Americano order3 = new Americano("Light");
+		
+		IcedLatte order4 = new IcedLatte("Medium");
+		IcedLatte order5 = new IcedLatte("Medium-Dark");
+		IcedLatte order6 = new IcedLatte("Breakfast");
+		
+		order1.addHotWater();
+		order1.pourIntoCup();
+		
+		
+		
+	}
+
+}
