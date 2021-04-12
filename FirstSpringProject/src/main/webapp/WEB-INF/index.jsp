@@ -21,7 +21,7 @@
 	</form>
 	
 	
-	<p><c:out value="${success}"/></p>
+	<p><c:out value="${count}"/></p>
 	
 
 </body>

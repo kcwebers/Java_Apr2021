@@ -17,8 +17,12 @@ public class OtherController {
     	
     	//model.addAttribute("myName", "Hi! My name is Kaysee!");
     	//model.addAttribute("myAge", "My age is 27 y/o!");
-    	
-    	//session.setAttribute("count", 0);
+    	Integer count = (Integer) session.getAttribute("count");
+    	if(count != null) {
+    		session.setAttribute("count", count+1);
+    	} else {
+    		session.setAttribute("count", 0);
+    	}
     	
     	return "index.jsp";
     }

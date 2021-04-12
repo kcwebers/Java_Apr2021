@@ -5,3 +5,5 @@ eclipse.preferences.version=1
 javaScriptOccurrenceIndicationColor=97,97,97
 org.eclipse.cdt.ui.occurrenceIndicationColor=97,97,97
 pydevOccurrenceIndicationColor=97,97,97
+textDragAndDropEnabled=false
+undoHistorySize=500
