@@ -19,6 +19,16 @@ public class Wizard extends Human {
     	this.intelligence = super.intelligence;
     }
     
+    public void displayHealth() {
+    	System.out.println("A Wizard always has 50 health");
+    }
+    
+    public void displayHealthLikeAHuman() {
+    	super.displayHealth();
+    }
+    
+   
+    
 
 
     

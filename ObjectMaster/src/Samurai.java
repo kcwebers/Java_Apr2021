@@ -9,7 +9,7 @@ public class Samurai extends Human {
     
     public Samurai() {
         this.health = Samurai.defaultHealth;
-        Samurai.numSamurai += 1;
+        numSamurai += 1;
     }
     
     public void deathBlow(Human target) {
