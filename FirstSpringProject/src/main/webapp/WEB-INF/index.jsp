@@ -15,7 +15,7 @@
 	<p><c:out value="${pass}"/></p>
 	
 	<form method="POST" action="/login">
-	    <label>Username: <input type="text" name="username"></label>
+	    <label>User name: <input type="text" name="username"></label>
 	    <label>Password: <input type="text" name="password"></label>
 	    <button>Login</button>
 	</form>

@@ -17,12 +17,17 @@ public class OtherController {
     	
     	//model.addAttribute("myName", "Hi! My name is Kaysee!");
     	//model.addAttribute("myAge", "My age is 27 y/o!");
-    	Integer count = (Integer) session.getAttribute("count");
-    	if(count != null) {
-    		session.setAttribute("count", count+1);
-    	} else {
-    		session.setAttribute("count", 0);
-    	}
+    	
+    	
+    	Integer gold = (Integer) session.getAttribute("count");
+    	if(gold == null) {
+    		session.setAttribute("gold", 0);
+    	} 
+    	
+    	Integer activities = (Integer) session.getAttribute("count");
+    	if(activites == null) {
+    		session.setAttribute("activities", "");
+    	} 
     	
     	return "index.jsp";
     }
