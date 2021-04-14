@@ -6046,3 +6046,15 @@ Binding(CTRL+SHIFT+C,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.textEditorScope,,,system)
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-14 10:53:58.666
+!MESSAGE exists = false open = true => deleted = true
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-14 10:53:58.667
+!MESSAGE buffering callback sts4.classpath.EBUtInQX MySQLDemo1 true 0
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-14 10:53:58.667
+!MESSAGE executing callback sts4.classpath.EBUtInQX 1 batched events
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-04-14 10:53:58.676
+!MESSAGE executing callback sts4.classpath.EBUtInQX SUCCESS [done]
