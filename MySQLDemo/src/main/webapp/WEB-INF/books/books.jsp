@@ -32,28 +32,28 @@
 		            <th>Description</th>
 		            <th>Language</th>
 		            <th>Number of Pages</th>
-		            <th>Author</th>
+	<!-- 	            <th>Author</th> -->
 		            <th>Actions</th>
 		        </tr>
 		    </thead>
 		    <tbody>
 		        <c:forEach items="${books}" var="book">
 		        <tr>
-		            <td><c:out value="${book.title}"/></td>
+		            <td><a href="/books/${book.id }/show"><c:out value="${book.title}"/></a></td>
 		            <td><c:out value="${book.description}"/></td>
 		            <td><c:out value="${book.language}"/></td>
 		            <td><c:out value="${book.numberOfPages}"/></td>
 		            
 		            
-		            <td><c:out value="${book.author.firstName}"/> <c:out value="${book.author.lastName}"/></td>
-		            
+		            <%-- <td><c:out value="${book.author.firstName}"/> <c:out value="${book.author.lastName}"/></td>
+		             --%>
 		            
 		            <td><a href="/books/${book.id}">Edit</a> | 
 		            
 		            <form action="/books/${book.id}" method="post">
 		            	<input type="hidden" name="_method" value="delete">
 		            	
-		            	<input type="submit" value="Destroy">
+		            	<input type="submit" value="Destroy Book">
 		            </form>
 		            
 		            </td>
@@ -79,10 +79,10 @@
 		            <td><c:out value="${auth.lastName}"/></td>
 		            <td><a href="/books/${auth.id}">Edit Authors</a> | 
 		            
-		            <form action="/books/${auth.id}" method="post">
+		            <form action="/author/${auth.id}" method="post">
 		            	<input type="hidden" name="_method" value="delete">
 		            	
-		            	<input type="submit" value="Destroy Authors">
+		            	<input type="submit" value="Destroy Author">
 		            </form>
 		            
 		            </td>

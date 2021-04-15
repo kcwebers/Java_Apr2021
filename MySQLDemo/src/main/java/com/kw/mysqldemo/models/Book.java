@@ -1,6 +1,7 @@
 package com.kw.mysqldemo.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -43,10 +45,23 @@ public class Book {
     // ===================================
     // Many to One w/ Author model
     // ===================================
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="author_id")
-    private Author author;
+	/*
+	 * @ManyToOne(fetch = FetchType.LAZY)
+	 * 
+	 * @JoinColumn(name="author_id") private Author author;
+	 */
     
+    // ===================================
+    // Many to Many w/ Author model
+    // ===================================
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "books_authors", 
+        joinColumns = @JoinColumn(name = "book_id"), 
+        inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> authors;
     
     // This will not allow the createdAt column to be updated after creation
     @Column(updatable=false)
@@ -114,14 +129,21 @@ public class Book {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
 	// getter and setter for m:1 with Author model
-	public Author getAuthor() {
-		return author;
+	/*
+	 * public Author getAuthor() { return author; } public void setAuthor(Author
+	 * author) { this.author = author; }
+	 */
+	
+	
+	// getter and setter for n:m w/ author
+	public List<Author> getAuthors() {
+		return authors;
 	}
-	public void setAuthor(Author author) {
-		this.author = author;
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
 	}
+
     
 }
 

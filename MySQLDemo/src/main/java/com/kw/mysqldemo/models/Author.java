@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -36,7 +39,21 @@ public class Author {
     // ===================================
     // One to Many w/ Book model
     // ===================================
-    @OneToMany(mappedBy="author", fetch = FetchType.LAZY)
+	/*
+	 * @OneToMany(mappedBy="author", fetch = FetchType.LAZY) private List<Book>
+	 * books;
+	 */
+    
+    // ===================================
+    // Many to Many w/ Book model
+    // ===================================
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "books_authors", 
+        joinColumns = @JoinColumn(name = "author_id"), 
+        inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
     private List<Book> books;
     
 	@Column(updatable=false)
@@ -93,6 +110,12 @@ public class Author {
 		this.updatedAt = updatedAt;
 	}
 	// gettter and setter for 1:m relationship
+	/*
+	 * public List<Book> getBooks() { return books; } public void
+	 * setBooks(List<Book> books) { this.books = books; }
+	 */
+	
+	// getter and setter for n:m w/ book
 	public List<Book> getBooks() {
 		return books;
 	}

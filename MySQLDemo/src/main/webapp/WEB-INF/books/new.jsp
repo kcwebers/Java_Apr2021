@@ -42,7 +42,7 @@
 	        <form:errors path="numberOfPages"/>     
 	        <form:input type="number" path="numberOfPages"/>
 	    </p>    
-	   	<p>
+<%-- 	   	<p>
 	        <form:label path="author">Author</form:label>
 	        <form:errors path="author"/>     
 	        <form:select path="author">
@@ -50,7 +50,7 @@
 		        	<form:option value="${author.id}"><c:out value="${author.firstName}"/> <c:out value="${author.lastName}"/></form:option>
 		        </c:forEach>
 	        </form:select>
-	    </p>
+	    </p> --%>
 	    <input type="submit" value="Submit"/>
 	</form:form>   
 

@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kw.mysqldemo.models.Author;
 import com.kw.mysqldemo.models.Book;
+import com.kw.mysqldemo.models.BookAuthor;
 import com.kw.mysqldemo.services.AuthorService;
 import com.kw.mysqldemo.services.BookService;
 
@@ -77,8 +79,10 @@ public class MainController {
     public String newBook(Model model) {
     	model.addAttribute("book", new Book());
     	
-    	List<Author> authors = authorService.allAuthors();
-        model.addAttribute("authors", authors);
+		/*
+		 * List<Author> authors = authorService.allAuthors();
+		 * model.addAttribute("authors", authors);
+		 */
         return "/books/new.jsp";
     }
     
@@ -87,9 +91,22 @@ public class MainController {
         if (result.hasErrors()) {
             return "/books/new.jsp";
         } else {
-            bookService.saveBook(book);
+        	bookService.saveBook(book);
             return "redirect:/books";
         }
+    }
+    
+// ======================================================================
+//  SHOW ROUTE FOR BOOK 
+// ======================================================================
+  
+    @RequestMapping("/books/{id}/show")
+    public String showBook(@PathVariable("id") Long id, Model model) {
+    	model.addAttribute("book", bookService.findBook(id));
+    	
+    	List<Author> authors = authorService.allAuthors();
+    	model.addAttribute("authors", authors);
+        return "/books/show.jsp";
     }
     
 // ======================================================================
@@ -113,7 +130,7 @@ public class MainController {
     }
     
 // ======================================================================
-//  DELETE ROUTE (delete single item based on the ID)
+//  DELETE ROUTE BOOK (delete single item based on the ID)
 // ======================================================================
     
     @RequestMapping(value="/books/{id}", method=RequestMethod.DELETE)
@@ -121,4 +138,33 @@ public class MainController {
         bookService.deleteBook(id);
         return "redirect:/books";
     }
+    
+// ======================================================================
+//  DELETE ROUTE BOOK (delete single item based on the ID)
+// ======================================================================
+    
+    @RequestMapping(value="/author/{id}", method=RequestMethod.DELETE)
+    public String destroyAuth(@PathVariable("id") Long id) {
+        authorService.deleteAuthor(id);
+        return "redirect:/books";
+    }
+    
+// ======================================================================
+//  CONNECT BOOK TO AUTHOR ROUTE
+// ======================================================================
+    
+    @RequestMapping(value="/books/addAuthor", method=RequestMethod.POST)
+    public String addAuthor(@RequestParam(value="book_id") Long book_id,
+    		@RequestParam(value="author_id") Long author_id) {
+    	
+    	Author a = authorService.findAuthor(author_id);
+    	Book b = bookService.findBook(book_id);
+    	
+    	BookAuthor ba = new BookAuthor(a, b);
+    	
+    	bookService.saveRelationship(ba);
+    	
+    	return "redirect:/books";
+    }
+ 
 }
