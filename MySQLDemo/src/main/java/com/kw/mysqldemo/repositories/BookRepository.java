@@ -30,5 +30,4 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     
     Book save(Book book);
 	
-	
 }

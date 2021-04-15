@@ -2,48 +2,83 @@ package com.kw.mysqldemo.controllers;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.kw.mysqldemo.models.Author;
 import com.kw.mysqldemo.models.Book;
+import com.kw.mysqldemo.services.AuthorService;
 import com.kw.mysqldemo.services.BookService;
 
 @Controller
 public class MainController {
-	
     private final BookService bookService;
-    public MainController(BookService bookService) {
+    private final AuthorService authorService;
+    public MainController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
+// ======================================================================
+//  INITIAL RENDER TO CHECK THAT SET UP WAS CORRECT
+// ======================================================================
+    
 	@RequestMapping("/")
 	public String index() {
 		return "index.jsp";
 	}
 	
-	// "/allBooks"
-	// call on service , which calls on repo to get all Books
+// ======================================================================
+//  MAIN PAGE
+// ======================================================================
 	
     @RequestMapping("/books")
     public String index(Model model) {
         List<Book> books = bookService.allBooks();
         model.addAttribute("books", books);
+        
+        List<Author> authors = authorService.allAuthors();
+        model.addAttribute("authors", authors);
         return "/books/books.jsp";
     }
+    
+// ======================================================================
+//  CREATE ROUTES FOR AUTHOR (render new form, process information submitted by form)
+// ======================================================================
+    
+    @RequestMapping("/authors/new")
+    public String newAuthor(Model model) {
+    	model.addAttribute("author", new Author());
+        return "/books/createAuth.jsp";
+    }
+    
+    @RequestMapping(value="/authors", method=RequestMethod.POST)
+    public String createAuthor(@Valid @ModelAttribute("author") Author author, BindingResult result) {
+        if (result.hasErrors()) {
+            return "/books/createAuth.jsp";
+        } else {
+            authorService.saveAuthor(author);
+            return "redirect:/books";
+        }
+    }
 	
-	// "/createBook"
-	// call on repo for creating book, and pass back a complete book to save
+// ======================================================================
+//  CREATE ROUTES (render new form, process information submitted by form)
+// ======================================================================
     
     @RequestMapping("/books/new")
     public String newBook(Model model) {
     	model.addAttribute("book", new Book());
+    	
+    	List<Author> authors = authorService.allAuthors();
+        model.addAttribute("authors", authors);
         return "/books/new.jsp";
     }
     
@@ -52,8 +87,38 @@ public class MainController {
         if (result.hasErrors()) {
             return "/books/new.jsp";
         } else {
-            bookService.createBook(book);
+            bookService.saveBook(book);
             return "redirect:/books";
         }
+    }
+    
+// ======================================================================
+//  EDIT ROUTES (render edit form, process information submitted by form)
+// ======================================================================
+    
+    @RequestMapping("/books/{id}")
+    public String editBook(@PathVariable("id") Long id, Model model) {
+    	model.addAttribute("book", bookService.findBook(id));
+        return "/books/edit.jsp";
+    }
+    
+    @RequestMapping(value="/books/{id}", method=RequestMethod.PUT)
+    public String update(@Valid @ModelAttribute("book") Book book, BindingResult result) {
+        if (result.hasErrors()) {
+            return "/books/edit.jsp";
+        } else {
+            bookService.saveBook(book);
+            return "redirect:/books";
+        }
+    }
+    
+// ======================================================================
+//  DELETE ROUTE (delete single item based on the ID)
+// ======================================================================
+    
+    @RequestMapping(value="/books/{id}", method=RequestMethod.DELETE)
+    public String destroy(@PathVariable("id") Long id) {
+        bookService.deleteBook(id);
+        return "redirect:/books";
     }
 }

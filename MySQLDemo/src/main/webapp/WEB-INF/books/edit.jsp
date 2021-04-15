@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ page isErrorPage="true" %>  
   <!-- c:out ; c:forEach ; c:if -->
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
   <!-- Formatting (like dates) -->
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
   <!-- form:form -->
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>    
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>  
+
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +22,9 @@
 </head>
 <body>
 
-<h1>New Book</h1>
-	<form:form action="/books" method="post" modelAttribute="book">
+<h1>Edit Book</h1>
+	<form:form action="/books/${book.id}" method="post" modelAttribute="book">
+	<input type="hidden" name="_method" value="put">
 	    <p>
 	        <form:label path="title">Title</form:label>
 	        <form:errors path="title"/>
@@ -42,18 +45,13 @@
 	        <form:errors path="numberOfPages"/>     
 	        <form:input type="number" path="numberOfPages"/>
 	    </p>    
-	   	<p>
-	        <form:label path="author">Author</form:label>
-	        <form:errors path="author"/>     
-	        <form:select path="author">
-		        <c:forEach items="${authors}" var="author">
-		        	<form:option value="${author.id}"><c:out value="${author.firstName}"/> <c:out value="${author.lastName}"/></form:option>
-		        </c:forEach>
-	        </form:select>
-	    </p>
 	    <input type="submit" value="Submit"/>
-	</form:form>   
+	</form:form>
 
-	<a href="/books">To Home!</a>
+	<form action="/books/${book.id}" method="post">
+		<input type="hidden" name="_method" value="delete"> 
+		<input type="submit" value="Destroy">
+	</form>
+
 </body>
 </html>

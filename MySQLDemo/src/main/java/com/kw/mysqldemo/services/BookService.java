@@ -14,17 +14,14 @@ public class BookService {
     private final BookRepository bookRepository;
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
-    }
-    
-    
-    
+    } 
     // returns all the books
     public List<Book> allBooks() {
         return bookRepository.findAll();
     }
     
-    // creates a book
-    public Book createBook(Book b) {
+    // saves a book (either to update or create new)
+    public Book saveBook(Book b) {
         return bookRepository.save(b);
     }
     
@@ -37,4 +34,10 @@ public class BookService {
             return null;
         }
     }
+    
+    // delete book
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
+    }
+    
 }
