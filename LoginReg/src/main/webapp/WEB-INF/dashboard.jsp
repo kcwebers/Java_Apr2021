@@ -22,9 +22,13 @@
 </head>
 <body>
 	<div class="container">
+<!-- button sends us to the route where we clear the session, thus logging hte user out! -->
 	<a class="btn btn-danger float-right mt-3" href="/logout">Logout</a>
 	<h1>You made it to the dashboard!</h1>
+<!-- 	display the user's named, based on how we send the information from the controller to the .jsp via model.addAttribute -->	
 	<h2 class="text-info">Welcome <c:out value="${user.firstName}" />!</h2>
+
+<!-- This line catches the 'success' redirect attribute that we sent along when the user registered or logged in! -->
 	<p class="text-success"><c:out value="${success}" /></p>
 
 	</div>

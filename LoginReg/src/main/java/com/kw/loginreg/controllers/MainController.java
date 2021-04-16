@@ -111,6 +111,7 @@ public class MainController {
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
+		// session.invalidate() clears out entire session, so no 'userId' will be in there and the user will be logged out!
 		session.invalidate();
 		return "redirect:/";
 	}
