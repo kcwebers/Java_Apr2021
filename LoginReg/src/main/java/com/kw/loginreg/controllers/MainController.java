@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kw.loginreg.models.User;
 import com.kw.loginreg.services.UserService;
@@ -25,13 +27,15 @@ public class MainController {
 
 	@RequestMapping("/")	
 	public String main(Model model) {
+		// pass forward an empty User instance, so it can be filled up and verified in our form:form
 		model.addAttribute("user", new User());
 		return "index.jsp";
 	}
 	
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
 	public String register(@Valid @ModelAttribute("user") User user, BindingResult result,
-			HttpSession session) {
+			HttpSession session,
+			RedirectAttributes redirect) {
 		// step #1: validate that the passwords match!
 		// if they don't, the error message we set in 'messages.properties' 
 		// will be stored in the same space as the errors in our BindingResult
@@ -39,14 +43,63 @@ public class MainController {
 		if(result.hasErrors()) {
 			return "index.jsp";
 		} else {
-			/*
-			 * if(userServ.findByEmail(user.getEmail())) { return "redirect:/"; }
-			 */
 			User u = userServ.registerUser(user);
 			// make sure to add the user to session, so they are properly logged in!
 			session.setAttribute("userId", u.getId());
+			redirect.addFlashAttribute("success", "You have successfully regisetered!");
 			return "redirect:/dashboard";
 		}
 	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(
+			@RequestParam(value="email") String email,
+			@RequestParam(value="password") String password,
+			HttpSession session,
+			RedirectAttributes redirect) {
+		
+		// is authentic login
+		if(userServ.authenticateUser(email, password)) {
+			User u = userServ.findByEmail(email);
+			session.setAttribute("userId", u.getId());
+			redirect.addFlashAttribute("success", "You have successfully logged in!");
+			return "redirect:/dashboard";
+		} else {
+			// is not authentic, add errors
+			redirect.addFlashAttribute("error", "Invalid Login Credentials!");
+			return "redirect:/";
+		}
+	}
+	
+	// ====================================================
+	// DASHBOARD
+	// ====================================================
+	
+	@RequestMapping("/dashboard")
+	public String dashboard(
+			Model model, 
+			HttpSession session,
+			RedirectAttributes redirect) {
+		// pull userId from session, if it's not in session, no one is logged in!
+		Long userId = (Long) session.getAttribute("userId");
+		// check to see if userId is null
+		if(userId == null) {
+			redirect.addFlashAttribute("please", "Please Register or Login before entering our site!");
+			return "redirect:/";
+		}
+		model.addAttribute("user", userServ.findUserById(userId));
+		return "dashboard.jsp";
+	}
+	
+	// ====================================================
+	// LOGOUT
+	// ====================================================
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
 	
 }

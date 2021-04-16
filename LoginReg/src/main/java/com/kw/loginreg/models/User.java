@@ -24,19 +24,19 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
-	@Size(min=2, max=75)
+	@Size(min=2, max=75, message="First Name must be 2-75 characters long!")
 	private String firstName;
-	@NotNull
-	@Size(min=2, max=75)
+	@NotNull(message= "Please enter a last name!")
+	@Size(min=2, max=75, message="Last Name must be 2-75 characters long!")
 	private String lastName;
 	@NotNull
-	@Email
-	@Size(min=2, max=200)
+	@Email(message = "Please enter a valid email!")
+	@Size(min=2, max=200, message = "Email must be b/w 2-200 characters!")
 	private String email;
 	
 	// for password DO NOT set 'max' because when we hash the password, it might not fit!!
 	@NotNull
-	@Size(min=5)
+	@Size(min=5, message = "Password must be at least 5 characters long!")
 	private String password;
 	
 	// @Transient marks a field that will not be saved to our database

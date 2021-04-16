@@ -19,6 +19,11 @@
 </head>
 <body>
 	<div class="container">
+	<div class="row">
+	<div class="col">
+	
+	<p class="text-danger"><c:out value="${please}" /></p>
+	
     <h1>Register!</h1>
     <!-- This is handling all of our errors at once instead of separating them out in our form
     Both methods of error handling are acceptable! Whichever you prefer works :) -->
@@ -52,6 +57,27 @@
         </p>
         <input class="btn btn-success mt-3" type="submit" value="Register!"/>
     </form:form>
+    </div> <!-- end of Register column -->
+    
+  <div class="col">
+  
+    <h1>Login</h1>
+    <p class="text-danger"><c:out value="${error}" /></p>
+    
+    <form method="post" action="/login">
+        <p>
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email"/>
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"/>
+        </p>
+        <input class="btn btn-warning mt-3" type="submit" value="Login!"/>
+    </form>    
+    
+</div>
+</div>
    </div> <!-- End of Container -->
 </body>
 </html>
