@@ -24,7 +24,12 @@ public class MainController {
 		this.userServ = userServ;
 		this.userValidator = userValidator;
 	}
+	
+	// ====================================================
+	// LOGIN/REGISTRATION ROUTES
+	// ====================================================
 
+	// RENDER LOGIN/REGISTER PAGE
 	@RequestMapping("/")	
 	public String main(Model model) {
 		// pass forward an empty User instance, so it can be filled up and verified in our form:form
@@ -32,6 +37,7 @@ public class MainController {
 		return "index.jsp";
 	}
 	
+	// PROCESS REGISTRATION
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
 	public String register(@Valid @ModelAttribute("user") User user, BindingResult result,
 			HttpSession session,
@@ -45,27 +51,31 @@ public class MainController {
 		} else {
 			User u = userServ.registerUser(user);
 			// make sure to add the user to session, so they are properly logged in!
-			session.setAttribute("userId", u.getId());
+			session.setAttribute("userId", u.getId()); // 
+			//^ make sure you add the id to session under the same label you would in the 'login' method
 			redirect.addFlashAttribute("success", "You have successfully regisetered!");
 			return "redirect:/dashboard";
 		}
 	}
 	
+	// PROCESS LOGIN
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(
 			@RequestParam(value="email") String email,
 			@RequestParam(value="password") String password,
 			HttpSession session,
 			RedirectAttributes redirect) {
-		
-		// is authentic login
+		// because we are using a regular form, we have to check things manually!
+		// first, call on the authenticateUser() method in our service and see if you get true or false!
+		// if true, then the user was verified and can be logged in
 		if(userServ.authenticateUser(email, password)) {
 			User u = userServ.findByEmail(email);
 			session.setAttribute("userId", u.getId());
+			//^ make sure you add the id to session under the same label you would in the 'register' method
 			redirect.addFlashAttribute("success", "You have successfully logged in!");
 			return "redirect:/dashboard";
-		} else {
-			// is not authentic, add errors
+		} else { // if false, redirect the user back to the login/reg page 
+			// and send a message that their credentials were wrong
 			redirect.addFlashAttribute("error", "Invalid Login Credentials!");
 			return "redirect:/";
 		}
@@ -81,12 +91,16 @@ public class MainController {
 			HttpSession session,
 			RedirectAttributes redirect) {
 		// pull userId from session, if it's not in session, no one is logged in!
+		// you are going to pull the info from session via the label you set when you added it to session
+		// session.setAttrbute('userId') == session.getAttribute('userId') : 'userId' in both places!
 		Long userId = (Long) session.getAttribute("userId");
 		// check to see if userId is null
 		if(userId == null) {
 			redirect.addFlashAttribute("please", "Please Register or Login before entering our site!");
 			return "redirect:/";
 		}
+		
+		// add the user to the model, so we can access their information and display their name :)
 		model.addAttribute("user", userServ.findUserById(userId));
 		return "dashboard.jsp";
 	}
