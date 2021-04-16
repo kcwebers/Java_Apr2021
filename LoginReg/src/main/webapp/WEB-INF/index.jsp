@@ -20,10 +20,16 @@
 <body>
 	<div class="container">
     <h1>Register!</h1>
-    
+    <!-- This is handling all of our errors at once instead of separating them out in our form
+    Both methods of error handling are acceptable! Whichever you prefer works :) -->
     <p><form:errors class="text-danger" path="user.*"/></p>
     
+    
+    <%-- The 'modelAttribute' in our <form:form> is coming from our controllers
+    Note that we don't need to user <c:out> when working inside of a tag, only when working outside! --%>
     <form:form class="form-group push" method="POST" action="/registration" modelAttribute="user">
+		<%--Make sure the `path="something"` matches your fields in you Model EXACTLY
+        This rule applies to all <form:form> type forms --%>
         <p>
             <form:label path="firstName">First Name:</form:label>
             <form:input type="text" path="firstName"/>

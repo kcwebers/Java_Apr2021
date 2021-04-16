@@ -11,6 +11,7 @@ import com.kw.loginreg.models.User;
 @Repository
 public interface UserRepo extends CrudRepository<User, Long> {
 
+	// we can use this to see if a email exists in our database already!
 	User findByEmail(String email);
 	
 	List<User> findAll();

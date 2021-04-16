@@ -33,9 +33,13 @@ public class User {
 	@Email
 	@Size(min=2, max=200)
 	private String email;
+	
+	// for password DO NOT set 'max' because when we hash the password, it might not fit!!
 	@NotNull
 	@Size(min=5)
 	private String password;
+	
+	// @Transient marks a field that will not be saved to our database
 	@Transient
 	private String passwordConfirmation;
 	

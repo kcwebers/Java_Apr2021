@@ -32,6 +32,9 @@ public class MainController {
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
 	public String register(@Valid @ModelAttribute("user") User user, BindingResult result,
 			HttpSession session) {
+		// step #1: validate that the passwords match!
+		// if they don't, the error message we set in 'messages.properties' 
+		// will be stored in the same space as the errors in our BindingResult
 		userValidator.validate(user, result);
 		if(result.hasErrors()) {
 			return "index.jsp";
@@ -40,6 +43,7 @@ public class MainController {
 			 * if(userServ.findByEmail(user.getEmail())) { return "redirect:/"; }
 			 */
 			User u = userServ.registerUser(user);
+			// make sure to add the user to session, so they are properly logged in!
 			session.setAttribute("userId", u.getId());
 			return "redirect:/dashboard";
 		}
