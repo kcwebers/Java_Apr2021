@@ -2,6 +2,8 @@ package com.kw.loginreg.services;
 
 import java.util.Optional;
 
+import javax.persistence.Query;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,13 @@ public class UserService {
     
     // find user by email
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    	Optional<User> u = userRepository.findByEmail(email);
+    	
+    	if(u.isPresent()) {
+            return u.get();
+    	} else {
+    	    return null;
+    	}
     }
     
     // find user by id
@@ -42,13 +50,15 @@ public class UserService {
     // authenticate user (login specific)
     public boolean authenticateUser(String email, String password) {
         // first find the user by email
-        User user = userRepository.findByEmail(email);
+    	Optional<User> user = userRepository.findByEmail(email);
         // if we can't find it by email, return false
+
         if(user == null) {
             return false;
         } else {
+        	User u = user.get();
             // if the passwords match, return true, else, return false
-            if(BCrypt.checkpw(password, user.getPassword())) {
+            if(BCrypt.checkpw(password, u.getPassword())) {
                 return true;
             } else {
                 return false;

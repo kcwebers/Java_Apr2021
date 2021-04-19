@@ -12,7 +12,7 @@ import com.kw.loginreg.models.User;
 public interface UserRepo extends CrudRepository<User, Long> {
 
 	// we can use this to see if a email exists in our database already!
-	User findByEmail(String email);
+	Optional<User> findByEmail(String email);
 	
 	List<User> findAll();
 	
@@ -21,5 +21,10 @@ public interface UserRepo extends CrudRepository<User, Long> {
 	User save(User x);
 	
 	Optional<User> findById(Long id);
+	
+	/*
+	 * @Query("SELECT COUNT(email) FROM User WHERE email=?1") Optional<User>
+	 * checkForEmail()
+	 */
 	
 }

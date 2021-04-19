@@ -33,7 +33,6 @@
 					<form:errors class="text-danger" path="user.*" />
 				</p>
 
-
 				<%-- The 'modelAttribute' in our <form:form> is coming from our controllers
     Note that we don't need to user <c:out> when working inside of a tag, only when working outside! --%>
 				<form:form class="form-group push" method="POST"

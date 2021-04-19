@@ -31,12 +31,12 @@ public class User {
 	private String lastName;
 	@NotNull
 	@Email(message = "Please enter a valid email!")
-	@Size(min=2, max=200, message = "Email must be b/w 2-200 characters!")
+	@Size(min=2, max = 200, message = "Email must be b/w 2-200 characters!")
 	private String email;
 	
 	// for password DO NOT set 'max' because when we hash the password, it might not fit!!
 	@NotNull
-	@Size(min=5, message = "Password must be at least 5 characters long!")
+	@Size(min = 5, message = "Password must be at least 5 characters long!")
 	private String password;
 	
 	// @Transient marks a field that will not be saved to our database

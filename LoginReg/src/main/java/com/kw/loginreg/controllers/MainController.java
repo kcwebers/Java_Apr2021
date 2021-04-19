@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,11 +42,16 @@ public class MainController {
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
 	public String register(@Valid @ModelAttribute("user") User user, BindingResult result,
 			HttpSession session,
-			RedirectAttributes redirect) {
+			RedirectAttributes redirect,
+			Model model) {
 		// step #1: validate that the passwords match!
 		// if they don't, the error message we set in 'messages.properties' 
 		// will be stored in the same space as the errors in our BindingResult
 		userValidator.validate(user, result);
+		if(userServ.findByEmail(user.getEmail()) != null) {
+			ObjectError error = new ObjectError("email","An account already exists for this email.");
+			result.addError(error);
+		}
 		if(result.hasErrors()) {
 			return "index.jsp";
 		} else {
