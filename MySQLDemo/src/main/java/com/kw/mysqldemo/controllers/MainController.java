@@ -61,7 +61,7 @@ public class MainController {
         return "/books/createAuth.jsp";
     }
     
-    @RequestMapping(value="/authors", method=RequestMethod.POST)
+    @RequestMapping(value="/authors/new", method=RequestMethod.POST)
     public String createAuthor(@Valid @ModelAttribute("author") Author author, BindingResult result) {
         if (result.hasErrors()) {
             return "/books/createAuth.jsp";
@@ -78,11 +78,9 @@ public class MainController {
     @RequestMapping("/books/new")
     public String newBook(Model model) {
     	model.addAttribute("book", new Book());
-    	
-		/*
-		 * List<Author> authors = authorService.allAuthors();
-		 * model.addAttribute("authors", authors);
-		 */
+    	List<Author> authors = authorService.allAuthors();
+		model.addAttribute("authors", authors);
+		 
         return "/books/new.jsp";
     }
     
@@ -114,8 +112,8 @@ public class MainController {
 // ======================================================================
     
     @RequestMapping("/books/{id}")
-    public String editBook(@PathVariable("id") Long id, Model model) {
-    	model.addAttribute("book", bookService.findBook(id));
+    public String editBook(@PathVariable("id") Long book_id, Model model) {
+    	model.addAttribute("book", bookService.findBook(book_id));
         return "/books/edit.jsp";
     }
     
@@ -133,14 +131,14 @@ public class MainController {
 //  DELETE ROUTE BOOK (delete single item based on the ID)
 // ======================================================================
     
-    @RequestMapping(value="/books/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/books/{id}/delete", method=RequestMethod.DELETE)
     public String destroy(@PathVariable("id") Long id) {
         bookService.deleteBook(id);
         return "redirect:/books";
     }
     
 // ======================================================================
-//  DELETE ROUTE BOOK (delete single item based on the ID)
+//  DELETE ROUTE Author (delete single item based on the ID)
 // ======================================================================
     
     @RequestMapping(value="/author/{id}", method=RequestMethod.DELETE)

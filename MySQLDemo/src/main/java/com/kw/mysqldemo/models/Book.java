@@ -29,17 +29,16 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Size(min = 5, max = 200)
+    @Size(min = 5)
     private String title;
     @NotNull
-    @Size(min = 5, max = 200)
+    @Size(min = 5)
     private String description;
     @NotNull
-    @Size(min = 3, max = 40)
+    @Size(min = 3)
     private String language;
     @NotNull
-    @Min(100)
-    @Max(2000)
+    @Min(50)
     private Integer numberOfPages;
     
     // ===================================

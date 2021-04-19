@@ -21,7 +21,7 @@
 <body>
 
 <h1>New Author</h1>
-	<form:form action="/authors" method="post" modelAttribute="author">
+	<form:form action="/authors/new" method="post" modelAttribute="author">
 	    <p>
 	        <form:label path="firstName">First Name</form:label>
 	        <form:errors path="firstName"/>
