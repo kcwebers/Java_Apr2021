@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kw.loginreg.models.User;
-import com.kw.loginreg.services.UserService;
+import com.kw.loginreg.supplies.UserService;
 import com.kw.loginreg.validators.UserValidator;
 
 @Controller

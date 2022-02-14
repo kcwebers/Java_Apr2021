@@ -22,9 +22,4 @@ public interface UserRepo extends CrudRepository<User, Long> {
 	
 	Optional<User> findById(Long id);
 	
-	/*
-	 * @Query("SELECT COUNT(email) FROM User WHERE email=?1") Optional<User>
-	 * checkForEmail()
-	 */
-	
 }
